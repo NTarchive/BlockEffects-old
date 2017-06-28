@@ -1,0 +1,9 @@
+name: ${project.name}
+main: ${project.groupId}.${project.artifactId}.${project.name}
+version: ${project.version}
+author: NickDEV
+commands:
+  blockeffects:
+    usage: /<command>
+    description: Default plugin command.
+    aliases: [be]
