@@ -36,7 +36,7 @@ public class PlayerMoveListener implements Listener {
         final Player player = event.getPlayer();
         Block block = player.getLocation().subtract(0, 1, 0).getBlock();
 
-        if (!allowedWorlds.contains(player.getWorld())) event.setCancelled(true);
+        if (!allowedWorlds.contains(player.getWorld())) return;
 
         if (securityCooldown.contains(player)) return;
         if (this.isNull(block)) return;

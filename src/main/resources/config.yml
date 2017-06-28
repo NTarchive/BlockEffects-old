@@ -63,5 +63,12 @@ security:
   enabled: true
   cooldown: 1
 
+# ==========================================================================
+#                              World
+# ==========================================================================
+# List of the worlds in which the BlockEffects are going to work.
+enabled-worlds:
+  - "world"
+
 # Config version (Don't change this!!!)
 config-version: 1.0
