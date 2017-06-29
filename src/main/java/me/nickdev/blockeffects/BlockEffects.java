@@ -53,6 +53,7 @@ public class BlockEffects extends JavaPlugin {
     }
 
     private void updateConfig() {
+        // not working
         boolean updated = false;
         if (getConfig().getString("config-version").equals("1.0")) {
             ArrayList<String> worlds = new ArrayList<>();
