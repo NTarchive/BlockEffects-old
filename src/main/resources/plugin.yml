@@ -7,3 +7,7 @@ commands:
     usage: /<command>
     description: Default plugin command.
     aliases: [be]
+permissions:
+  blockeffects.blocks:
+    default: op
+    description: Allows you to see the registered blocks.

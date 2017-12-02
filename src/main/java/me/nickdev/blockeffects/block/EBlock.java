@@ -1,89 +1,124 @@
 package me.nickdev.blockeffects.block;
 
 import me.nickdev.blockeffects.util.StringManager;
+import me.nickdev.blockeffects.util.item.MaterialData;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 
-import java.util.ArrayList;
+import java.util.List;
 
-public class EBlock {
+public class EBlock  {
 
+    // Required
     private String name;
-    private Material material;
-    private short data;
+    private MaterialData materialData;
+    private PotionEffect potionEffect;
 
+    // Optional
     private String message;
-    private int cooldown;
-    private PotionEffectType potionEffect;
-    private int duration;
-    private int amplifier;
-    private ArrayList<String> commands = new ArrayList<>();
+    private String permission;
+    private List<String> commands;
 
-    public EBlock(String name, Material material, short data, String message, int cooldown, PotionEffectType potionEffect, int duration, int amplifier, ArrayList<String> commands) {
+    /**
+     * Creates a new EBlock.
+     *
+     * @param name  Name
+     * @param materialData  MaterialData
+     * @param potionEffect  PotionEffect
+     * @param message  Message
+     * @param permission  Permission
+     * @param commands  List of commands
+     */
+    public EBlock(String name, MaterialData materialData, PotionEffect potionEffect, String message, String permission, List<String> commands) {
         this.name = name;
-        this.material = material;
-        this.data = data;
-        this.message = message;
-        this.cooldown = cooldown;
+        this.materialData = materialData;
         this.potionEffect = potionEffect;
-        this.duration = duration;
-        this.amplifier = amplifier;
+        this.message = message;
+        this.permission = permission;
         this.commands = commands;
+    }
+
+    /**
+     * Adds PotionEffect to the player.
+     *
+     * @param player  Player
+     */
+    private void addEffect(Player player) {
+        player.removePotionEffect(potionEffect.getType());
+        player.addPotionEffect(potionEffect);
+    }
+
+    /**
+     * Sends message (if specified) to the player.
+     *
+     * @param player  Player
+     */
+    private void sendMessage(Player player) {
+        if (message == null) return;
+        player.sendMessage(StringManager.color(message));
+    }
+
+    /**
+     * Dispatches commands (if specified).
+     *
+     * @param player  Player
+     */
+    private void dispatchCommands(Player player) {
+        if (commands == null || commands.size() == 0) return;
+        for (final String command : commands) Bukkit.dispatchCommand(Bukkit.getConsoleSender(), StringManager.playerFormat(command, player));
+    }
+
+    /**
+     * Activates the effect.
+     *
+     * @param player  Player
+     */
+    public void activate(Player player) {
+        addEffect(player);
+        sendMessage(player);
+        dispatchCommands(player);
     }
 
     public String getName() {
         return name;
     }
 
-    public Material getMaterial() {
-        return material;
+    public MaterialData getMaterialData() {
+        return materialData;
     }
 
-    public short getData() {
-        return data;
-    }
-
-    public String getMessage() {
-        return StringManager.color(message);
-    }
-
-    public int getCooldown() {
-        return cooldown;
-    }
-
-    public PotionEffectType getPotionEffect() {
+    public PotionEffect getPotionEffect() {
         return potionEffect;
     }
 
-    public int getDuration() {
-        return duration;
+    public String getMessage() {
+        return message;
     }
 
-    public int getAmplifier() {
-        return amplifier;
+    public String getPermission() {
+        return permission;
     }
 
-    public ArrayList<String> getCommands() {
+    public List<String> getCommands() {
         return commands;
     }
 
-    public void addEffect(Player player) {
-        player.removePotionEffect(this.potionEffect);
-        player.addPotionEffect(new PotionEffect(this.potionEffect, this.duration*20, this.amplifier-1));
-    }
+    /**
+     * Returns info about the EBlock.
+     *
+     * @return  String[] information
+     */
+    public String[] info() {
+        if (message == null) message = "none";
+        if (permission == null) permission = "none";
 
-    public void sendMessage(Player player) {
-        if (this.message == null) return;
-        player.sendMessage(StringManager.color(this.message));
-    }
-
-    public void dispatchCommands(Player player) {
-        if (this.commands == null || this.commands.size() == 0) return;
-        for (String command : this.commands) {
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), StringManager.playerFormat(command, player));
-        }
+        return new String[] {
+                "Name: " + name,
+                "Block: " + materialData.getMaterial() + ":" + materialData.getData(),
+                "Effect: " + potionEffect.getType().getName() + " d: " + potionEffect.getDuration() + " a: " + potionEffect.getAmplifier(),
+                "-----------------", "Message: " + message,
+                "Permission: " + permission
+        };
     }
 }

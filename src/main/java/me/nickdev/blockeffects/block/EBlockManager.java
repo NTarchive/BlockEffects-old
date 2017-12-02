@@ -1,37 +1,39 @@
 package me.nickdev.blockeffects.block;
 
-import me.nickdev.blockeffects.BlockEffects;
-import me.nickdev.blockeffects.util.ItemManager;
+import me.nickdev.blockeffects.config.ConfigManager;
 import org.bukkit.Material;
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.potion.PotionEffectType;
 
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 
 public class EBlockManager {
 
-    private HashMap<Material, EBlock> effectBlockHashMap = new HashMap<>();
+    private ConfigManager configManager;
+    private static HashMap<Material, EBlock> eBlocks = new HashMap<>();
 
-    public EBlockManager(BlockEffects blockEffects) {
-        ConfigurationSection conf = blockEffects.getConfig().getConfigurationSection("blocks");
-        for (String string : conf.getKeys(false)) {
-            Material mat = ItemManager.getMaterial(conf.getString(string + ".material"));
-            short data = ItemManager.getData(conf.getString(string + ".material"));
-            String message = conf.getString(string + ".message");
-            PotionEffectType potionEffectType = PotionEffectType.getByName(conf.getString(string + ".effect.type"));
-            int duration = conf.getInt(string + ".effect.duration");
-            int amplifier = conf.getInt(string + ".effect.amplifier");
+    public EBlockManager(ConfigManager configManager) {
+        this.configManager = configManager;
 
-            effectBlockHashMap.put(mat, new EBlock(string, mat, data, message, 0, potionEffectType, duration, amplifier, (ArrayList<String>) conf.getStringList(string + ".commands")));
-        }
+        loadEBlocks();
     }
 
-    public HashMap<Material, EBlock> getEBlocks() {
-        return effectBlockHashMap;
+    public void loadEBlocks() {
+        for (String blockName : configManager.getBlockSection().getKeys(false)) registerEBlock(configManager.getEBlock(blockName));
+    }
+
+    public void registerEBlock(EBlock eBlock) {
+        EBlockManager.eBlocks.put(eBlock.getMaterialData().getMaterial(), eBlock);
     }
 
     public boolean containsEBlock(Material material) {
-        return effectBlockHashMap.keySet().contains(material);
+        return EBlockManager.eBlocks.keySet().contains(material);
+    }
+
+    public EBlock getEBlock(Material material) {
+        return EBlockManager.eBlocks.get(material);
+    }
+
+    public Collection<EBlock> getEBlocks() {
+        return EBlockManager.eBlocks.values();
     }
 }
