@@ -1,0 +1,14 @@
+me\nickdev\blockeffects\util\StringManager.class
+me\nickdev\blockeffects\util\item\ItemManager.class
+me\nickdev\blockeffects\constants\O.class
+me\nickdev\blockeffects\block\EBlock.class
+me\nickdev\blockeffects\listeners\PlayerMoveListener.class
+me\nickdev\blockeffects\listeners\ListenerComponent.class
+me\nickdev\blockeffects\config\ConfigManager.class
+me\nickdev\blockeffects\listeners\PlayerMoveListener$1.class
+me\nickdev\blockeffects\BlockEffects.class
+me\nickdev\blockeffects\constants\P.class
+me\nickdev\blockeffects\commands\DefaultCommand.class
+me\nickdev\blockeffects\listeners\RegisterListeners.class
+me\nickdev\blockeffects\block\EBlockManager.class
+me\nickdev\blockeffects\commands\RegisterCommands.class

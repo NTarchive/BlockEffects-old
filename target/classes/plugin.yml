@@ -1,0 +1,13 @@
+name: BlockEffects
+main: me.nickdev.blockeffects.BlockEffects
+version: 1.2
+author: NickDEV
+commands:
+  blockeffects:
+    usage: /<command>
+    description: Default plugin command.
+    aliases: [be]
+permissions:
+  blockeffects.blocks:
+    default: op
+    description: Allows you to see the registered blocks.
