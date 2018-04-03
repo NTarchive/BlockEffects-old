@@ -2,6 +2,7 @@ package me.nickdev.blockeffects.commands;
 
 import me.nickdev.blockeffects.BlockEffects;
 import me.nickdev.blockeffects.block.EBlock;
+import me.nickdev.blockeffects.block.EBlockManager;
 import me.nickdev.blockeffects.constants.O;
 import me.nickdev.blockeffects.constants.P;
 import me.nickdev.blockeffects.util.StringManager;
@@ -13,9 +14,11 @@ import org.bukkit.command.CommandSender;
 public class DefaultCommand implements CommandExecutor {
 
     private BlockEffects blockEffects;
+    private EBlockManager blockManager;
 
-    public DefaultCommand(BlockEffects blockEffects) {
+    public DefaultCommand(BlockEffects blockEffects, EBlockManager blockManager) {
         this.blockEffects = blockEffects;
+        this.blockManager = blockManager;
     }
 
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
@@ -40,7 +43,7 @@ public class DefaultCommand implements CommandExecutor {
             return true;
         }
         sender.sendMessage(P.PREFIX + ChatColor.GRAY + "Registered Blocks");
-        for (EBlock block : blockEffects.getBlockManager().getEBlocks()) {
+        for (EBlock block : blockManager.getEBlocks()) {
             sender.sendMessage("----------------");
             for (String line : block.info()) {
                 sender.sendMessage(ChatColor.GRAY + StringManager.color(line));

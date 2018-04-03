@@ -3,12 +3,12 @@ package me.nickdev.blockeffects.config;
 import me.nickdev.blockeffects.BlockEffects;
 import me.nickdev.blockeffects.block.EBlock;
 import me.nickdev.blockeffects.util.item.ItemManager;
-import me.nickdev.blockeffects.util.item.MaterialData;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.material.MaterialData;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -46,7 +46,7 @@ public class ConfigManager  {
          int duration = blockSection.getInt(name + ".effect.duration");
          int amplifier = blockSection.getInt(name + ".effect.amplifier");
 
-         return new EBlock(name, new MaterialData(mat, data), new PotionEffect(potionEffectType, duration, amplifier), message, permission, commands);
+         return new EBlock(name, new MaterialData(mat, (byte) data), new PotionEffect(potionEffectType, duration, amplifier), message, permission, commands);
     }
 
     public ConfigurationSection getBlockSection() {

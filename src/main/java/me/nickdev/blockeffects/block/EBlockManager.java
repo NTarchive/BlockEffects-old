@@ -14,15 +14,16 @@ public class EBlockManager {
     public EBlockManager(ConfigManager configManager) {
         this.configManager = configManager;
 
+        // Loads EBlocks
         loadEBlocks();
     }
 
-    public void loadEBlocks() {
+    private void loadEBlocks() {
         for (String blockName : configManager.getBlockSection().getKeys(false)) registerEBlock(configManager.getEBlock(blockName));
     }
 
-    public void registerEBlock(EBlock eBlock) {
-        EBlockManager.eBlocks.put(eBlock.getMaterialData().getMaterial(), eBlock);
+    private void registerEBlock(EBlock eBlock) {
+        EBlockManager.eBlocks.put(eBlock.getMaterialData().getItemType(), eBlock);
     }
 
     public boolean containsEBlock(Material material) {

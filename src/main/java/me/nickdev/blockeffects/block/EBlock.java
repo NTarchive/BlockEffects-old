@@ -1,9 +1,9 @@
 package me.nickdev.blockeffects.block;
 
 import me.nickdev.blockeffects.util.StringManager;
-import me.nickdev.blockeffects.util.item.MaterialData;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.material.MaterialData;
 import org.bukkit.potion.PotionEffect;
 
 import java.util.List;
@@ -66,7 +66,7 @@ public class EBlock  {
      */
     private void dispatchCommands(Player player) {
         if (commands == null || commands.size() == 0) return;
-        for (final String command : commands) Bukkit.dispatchCommand(Bukkit.getConsoleSender(), StringManager.playerFormat(command, player));
+        for (String command : commands) Bukkit.dispatchCommand(Bukkit.getConsoleSender(), StringManager.playerFormat(command, player));
     }
 
     /**
@@ -115,7 +115,7 @@ public class EBlock  {
 
         return new String[] {
                 "Name: " + name,
-                "Block: " + materialData.getMaterial() + ":" + materialData.getData(),
+                "Block: " + materialData.getItemType() + ":" + materialData.getData(),
                 "Effect: " + potionEffect.getType().getName() + " d: " + potionEffect.getDuration() + " a: " + potionEffect.getAmplifier(),
                 "-----------------", "Message: " + message,
                 "Permission: " + permission

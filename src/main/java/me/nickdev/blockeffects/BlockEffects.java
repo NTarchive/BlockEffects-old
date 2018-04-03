@@ -10,43 +10,32 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class BlockEffects extends JavaPlugin {
 
-    private PluginDescriptionFile pdf = this.getDescription();
+    private PluginDescriptionFile pdf = getDescription();
     private String version = pdf.getVersion();
-
-    private ConfigManager configManager;
-    private EBlockManager blockManager;
 
     public void onEnable() {
         Bukkit.getLogger().info("[BlockEffects] BlockEffects v" + version + " has been enabled.");
 
-        this.print("Preparing the config files.");
-        this.saveDefaultConfig();
+        print("Preparing the config files.");
+        saveDefaultConfig();
 
-        this.configManager = new ConfigManager(this);
-        this.blockManager = new EBlockManager(this.configManager);
+        ConfigManager configManager = new ConfigManager(this);
+        EBlockManager blockManager = new EBlockManager(configManager);
 
-        this.print("Registering commands & listeners.");
-        new RegisterCommands(this);
-        new RegisterListeners(this);
+        print("Registering commands & listeners.");
+        new RegisterCommands(this, blockManager);
+        new RegisterListeners(this, blockManager, configManager);
     }
 
     public void onDisable() {
-        Bukkit.getLogger().info("[BlockEffects] BlockEffects v" + this.version + " has been disabled.");
+        Bukkit.getLogger().info("[BlockEffects] BlockEffects v" + version + " has been disabled.");
     }
 
-    private void print(String message) {
+    public static void print(String message) {
         System.out.println("[BlockEffects] " + message);
     }
 
     public String getVersion() {
         return version;
-    }
-
-    public ConfigManager getConfigManager() {
-        return configManager;
-    }
-
-    public EBlockManager getBlockManager() {
-        return blockManager;
     }
 }

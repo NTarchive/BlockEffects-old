@@ -6,7 +6,6 @@ import me.nickdev.blockeffects.block.EBlockManager;
 import me.nickdev.blockeffects.config.ConfigManager;
 import me.nickdev.blockeffects.constants.O;
 import me.nickdev.blockeffects.constants.P;
-import me.nickdev.blockeffects.util.ListenerComponent;
 import me.nickdev.blockeffects.util.item.ItemManager;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
@@ -20,16 +19,16 @@ import java.util.ArrayList;
 public class PlayerMoveListener implements ListenerComponent {
     
     private BlockEffects blockEffects;
-    
-    private ConfigManager configManager;
+
     private EBlockManager blockManager;
+    private ConfigManager configManager;
     private ArrayList<Player> securityCooldown = new ArrayList<>();
 
-    public PlayerMoveListener( BlockEffects blockEffects) {
+    public PlayerMoveListener(BlockEffects blockEffects, EBlockManager blockManager, ConfigManager configManager) {
         this.blockEffects = blockEffects;
-        
-        this.configManager = blockEffects.getConfigManager();
-        this.blockManager = blockEffects.getBlockManager();
+        this.blockManager = blockManager;
+        this.configManager = configManager;
+
         register(blockEffects);
     }
 
